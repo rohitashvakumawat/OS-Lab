@@ -1,34 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define SIZE 8
 
 
-int main(){
-    int p;
-    printf("Enter no. of processes: ");
-    scanf("%d ",&p);
-    
-    int btime[p];
-    for(int i = 0 ; i<p;i++){
-        printf("Enter Burst time for process %d: ", i+1);
-        scanf("%d", &btime[i]);
-    }
+void FCFS(int arr[], int head, int size) { 
+    int seek_count = 0; 
+    int distance, cur_track; 
+    for (int i = 0; i < size; i++) { 
+        cur_track = arr[i]; 
+        distance = abs(cur_track - head); 
+        seek_count += distance; 
+        head = cur_track; 
+    } 
+    printf("Total number of seek operations = %d\n", seek_count);
+}
 
-    
-    int awt= 0;
-    int wt = 0;
-    int wtime[p];
-    for(int i = 0; i<p-1; i++){
-        wtime[i] = wt;
-        wt += btime[i];
-        awt += awt + btime[i];
-    }
-    wtime[p-1] = wt;
-
-    for(int i=0; i<p;i++){
-        printf("\nProcess %d Done with Burst time %d | waiting time %d | Turn around time %d ", i+1, btime[i], wtime[i],btime[i]+wtime[i]);
-    }
-
-    printf("\nAverage waiting time is: %d ms", awt/p);
-
+int main() { 
+    int head; 
+    printf("Enter the initial position of the disk head: "); 
+    scanf("%d", &head); 
+    int arr[SIZE]; 
+    printf("Enter the request array (%d elements):\n", SIZE); 
+    for (int i = 0; i < SIZE; i++) { 
+        scanf("%d", &arr[i]); 
+    } 
+    FCFS(arr, head, SIZE); 
     return 0;
 }
